@@ -5,7 +5,8 @@ A robust, scalable RESTful API built with Laravel for managing restaurant operat
 ## Core Features
 
 * **Role-Based Access Control (RBAC):** Secure API endpoints tailored specifically for Admin, Waiter, Kitchen, and Cashier roles using Laravel Sanctum tokens.
-* **Order Lifecycle Management:** Tracks orders automatically through precise stages: pending -> preparing -> eady -> served -> paid.
+* **Order Lifecycle Management:** Tracks orders automatically through precise stages: pending -> preparing -> 
+eady -> served -> paid.
 * **Smart Table Management:** Prevents double-booking, tracks table capacity, and dynamically updates current status (available, occupied, reserved).
 * **Financial Integrity:** Uses strict database transactions for order processing and SoftDeletes for menu items and users, ensuring historical invoices and financial reports are never lost or corrupted.
 * **Kitchen & Cashier Flows:** Dedicated endpoints for kitchen staff to pull active orders and cashiers to generate invoices and process payments natively.
@@ -42,7 +43,7 @@ A robust, scalable RESTful API built with Laravel for managing restaurant operat
    `
 
 ## Default Test Accounts (Seeders)
-* **Admin:** dmin@test.com (Password: 123456)
+* **Admin:** admin@test.com (Password: 123456)
 * **Waiter:** waiter@test.com (Password: 123456)
 
 ---
