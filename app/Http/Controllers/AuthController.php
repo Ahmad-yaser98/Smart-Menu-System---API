@@ -13,7 +13,7 @@ class AuthController extends Controller
     {
         $request->validate([
             'email' => 'required|email',
-            'password' => 'required'
+            'password' => 'required|string|min:6|max:50'
         ]);
 
         if (!Auth::attempt($request->only('email', 'password'))) {
@@ -55,7 +55,7 @@ class AuthController extends Controller
         if ($request->has('password')) {
             $user->password = Hash::make($request->password);
         }
-
+        
         $user->save();
 
         return response()->json([
