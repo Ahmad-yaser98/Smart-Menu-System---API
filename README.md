@@ -43,7 +43,7 @@ eady -> served -> paid.
    `
 
 ## Default Test Accounts (Seeders)
-* **Admin:** dmin@test.com (Password: 123456)
+* **Admin:** admin@test.com (Password: 123456)
 * **Waiter:** waiter@test.com (Password: 123456)
 
 ---
