@@ -1,0 +1,373 @@
+﻿{
+    "info":  {
+                 "name":  "Smart Menu System API",
+                 "description":  "ظ…ط¬ظ…ظˆط¹ط© ط§ط®طھط¨ط§ط± ظƒط§ظ…ظ„ط© ظ„ظ†ط¸ط§ظ… ط§ظ„ظ…ط·ط¹ظ… ط§ظ„ط°ظƒظٹ (ط§ظ„ظƒط§ط¨طھظ†طŒ ط§ظ„ظ…ط·ط¨ط®طŒ ط§ظ„ظƒط§ط´ظٹط±)",
+                 "schema":  "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+             },
+    "auth":  {
+                 "type":  "bearer",
+                 "bearer":  [
+                                {
+                                    "key":  "token",
+                                    "value":  "{{token}}",
+                                    "type":  "string"
+                                }
+                            ]
+             },
+    "event":  [
+                  {
+                      "listen":  "prerequest",
+                      "script":  {
+                                     "type":  "text/javascript",
+                                     "exec":  [
+                                                  "pm.request.headers.add({key: \u0027Accept\u0027, value: \u0027application/json\u0027});"
+                                              ]
+                                 }
+                  }
+              ],
+    "variable":  [
+                     {
+                         "key":  "base_url",
+                         "value":  "http://127.0.0.1:8000/api",
+                         "type":  "string"
+                     },
+                     {
+                         "key":  "token",
+                         "value":  "",
+                         "type":  "string"
+                     },
+                     {
+                         "key":  "order_id",
+                         "value":  "1",
+                         "type":  "string"
+                     }
+                 ],
+    "item":  [
+                 {
+                     "name":  "1. Authentication (ط§ظ„طھط³ط¬ظٹظ„)",
+                     "item":  [
+                                  {
+                                      "name":  "Login (طھط³ط¬ظٹظ„ ط§ظ„ط¯ط®ظˆظ„)",
+                                      "event":  [
+                                                    {
+                                                        "listen":  "test",
+                                                        "script":  {
+                                                                       "exec":  [
+                                                                                    "var jsonData = pm.response.json();",
+                                                                                    "if(jsonData.token) {",
+                                                                                    "    pm.collectionVariables.set(\u0027token\u0027, jsonData.token);",
+                                                                                    "    console.log(\u0027Token saved automatically!\u0027);",
+                                                                                    "}"
+                                                                                ],
+                                                                       "type":  "text/javascript"
+                                                                   }
+                                                    }
+                                                ],
+                                      "request":  {
+                                                      "auth":  {
+                                                                   "type":  "noauth"
+                                                               },
+                                                      "method":  "POST",
+                                                      "header":  [
+
+                                                                 ],
+                                                      "body":  {
+                                                                   "mode":  "raw",
+                                                                   "raw":  "{\n    \"email\": \"waiter@test.com\",\n    \"password\": \"123456\"\n}",
+                                                                   "options":  {
+                                                                                   "raw":  {
+                                                                                               "language":  "json"
+                                                                                           }
+                                                                               }
+                                                               },
+                                                      "url":  {
+                                                                  "raw":  "{{base_url}}/login",
+                                                                  "host":  [
+                                                                               "{{base_url}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "login"
+                                                                           ]
+                                                              }
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Logout (تسجيل الخروج)",
+                                      "request":  {
+                                                      "method":  "POST",
+                                                      "url":  {
+                                                                  "host":  [
+                                                                               "{{base_url}}"
+                                                                           ],
+                                                                  "raw":  "{{base_url}}/logout",
+                                                                  "path":  [
+                                                                               "logout"
+                                                                           ]
+                                                              }
+                                                  }
+                                  }
+                              ]
+                 },
+                 {
+                     "name":  "Admin Only (للإدارة فقط)",
+                     "item":  [
+                                  {
+                                      "name":  "Create New Employee (إنشاء موظف جديد)",
+                                      "request":  {
+                                                      "url":  {
+                                                                  "host":  [
+                                                                               "{{base_url}}"
+                                                                           ],
+                                                                  "raw":  "{{base_url}}/users",
+                                                                  "path":  [
+                                                                               "users"
+                                                                           ]
+                                                              },
+                                                      "method":  "POST",
+                                                      "body":  {
+                                                                   "raw":  "{\n    \"name\": \"New Waiter\",\n    \"email\": \"newwaiter@test.com\",\n    \"password\": \"12345678\",\n    \"password_confirmation\": \"12345678\",\n    \"role\": \"waiter\"\n}",
+                                                                   "options":  {
+                                                                                   "raw":  {
+                                                                                               "language":  "json"
+                                                                                           }
+                                                                               },
+                                                                   "mode":  "raw"
+                                                               }
+                                                  }
+                                  }
+                              ]
+                 },
+                 {
+                     "name":  "2. Waiter Flow (ط¯ظˆط±ط© ط§ظ„ظƒط§ط¨طھظ†)",
+                     "item":  [
+                                  {
+                                      "name":  "Get Menu (ط¹ط±ط¶ ط§ظ„ظ…ظ†ظٹظˆ)",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "header":  [
+
+                                                                 ],
+                                                      "url":  {
+                                                                  "raw":  "{{base_url}}/menu",
+                                                                  "host":  [
+                                                                               "{{base_url}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "menu"
+                                                                           ]
+                                                              }
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Create Order (ط·ظ„ط¨ ط¬ط¯ظٹط¯)",
+                                      "event":  [
+                                                    {
+                                                        "listen":  "test",
+                                                        "script":  {
+                                                                       "exec":  [
+                                                                                    "var jsonData = pm.response.json();",
+                                                                                    "if(jsonData.order \u0026\u0026 jsonData.order.id) {",
+                                                                                    "    pm.collectionVariables.set(\u0027order_id\u0027, jsonData.order.id);",
+                                                                                    "}",
+                                                                                    "if(jsonData.data \u0026\u0026 jsonData.data.id) {",
+                                                                                    "    pm.collectionVariables.set(\u0027order_id\u0027, jsonData.data.id);",
+                                                                                    "}",
+                                                                                    "if(jsonData.id) {",
+                                                                                    "    pm.collectionVariables.set(\u0027order_id\u0027, jsonData.id);",
+                                                                                    "}"
+                                                                                ],
+                                                                       "type":  "text/javascript"
+                                                                   }
+                                                    }
+                                                ],
+                                      "request":  {
+                                                      "method":  "POST",
+                                                      "header":  [
+
+                                                                 ],
+                                                      "body":  {
+                                                                   "mode":  "raw",
+                                                                   "raw":  "{\n    \"table_id\": 1,\n    \"items\": [\n        {\n            \"menu_item_id\": 1,\n            \"quantity\": 2,\n            \"notes\": \"ط¨ط¯ظˆظ† ظ…ط®ظ„ظ„\"\n        }\n    ]\n}",
+                                                                   "options":  {
+                                                                                   "raw":  {
+                                                                                               "language":  "json"
+                                                                                           }
+                                                                               }
+                                                               },
+                                                      "url":  {
+                                                                  "raw":  "{{base_url}}/orders",
+                                                                  "host":  [
+                                                                               "{{base_url}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "orders"
+                                                                           ]
+                                                              }
+                                                  }
+                                  }
+                              ]
+                 },
+                 {
+                     "name":  "3. Kitchen Flow (ط¯ظˆط±ط© ط§ظ„ظ…ط·ط¨ط®)",
+                     "item":  [
+                                  {
+                                      "name":  "Get Active Orders (ط·ظ„ط¨ط§طھ ط§ظ„ط´ط§ط´ط©)",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "header":  [
+
+                                                                 ],
+                                                      "url":  {
+                                                                  "raw":  "{{base_url}}/kitchen/orders",
+                                                                  "host":  [
+                                                                               "{{base_url}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "kitchen",
+                                                                               "orders"
+                                                                           ]
+                                                              }
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Update Status To Preparing (ظ‚ظٹط¯ ط§ظ„طھط­ط¶ظٹط±)",
+                                      "request":  {
+                                                      "method":  "PUT",
+                                                      "header":  [
+
+                                                                 ],
+                                                      "body":  {
+                                                                   "mode":  "raw",
+                                                                   "raw":  "{\n    \"status\": \"preparing\"\n}",
+                                                                   "options":  {
+                                                                                   "raw":  {
+                                                                                               "language":  "json"
+                                                                                           }
+                                                                               }
+                                                               },
+                                                      "url":  {
+                                                                  "raw":  "{{base_url}}/kitchen/orders/{{order_id}}/status",
+                                                                  "host":  [
+                                                                               "{{base_url}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "kitchen",
+                                                                               "orders",
+                                                                               "{{order_id}}",
+                                                                               "status"
+                                                                           ]
+                                                              }
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Update Status To Ready (ط¬ط§ظ‡ط²)",
+                                      "request":  {
+                                                      "method":  "PUT",
+                                                      "header":  [
+
+                                                                 ],
+                                                      "body":  {
+                                                                   "mode":  "raw",
+                                                                   "raw":  "{\n    \"status\": \"ready\"\n}",
+                                                                   "options":  {
+                                                                                   "raw":  {
+                                                                                               "language":  "json"
+                                                                                           }
+                                                                               }
+                                                               },
+                                                      "url":  {
+                                                                  "raw":  "{{base_url}}/kitchen/orders/{{order_id}}/status",
+                                                                  "host":  [
+                                                                               "{{base_url}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "kitchen",
+                                                                               "orders",
+                                                                               "{{order_id}}",
+                                                                               "status"
+                                                                           ]
+                                                              }
+                                                  }
+                                  }
+                              ]
+                 },
+                 {
+                     "name":  "4. Waiter Serves (طھط³ظ„ظٹظ… ط§ظ„ط·ظ„ط¨)",
+                     "item":  [
+                                  {
+                                      "name":  "Serve Order (طھط£ظƒظٹط¯ ط§ظ„طھط³ظ„ظٹظ… ظ„ظ„ط·ط§ظˆظ„ط©)",
+                                      "request":  {
+                                                      "method":  "PATCH",
+                                                      "header":  [
+
+                                                                 ],
+                                                      "url":  {
+                                                                  "raw":  "{{base_url}}/orders/{{order_id}}/serve",
+                                                                  "host":  [
+                                                                               "{{base_url}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "orders",
+                                                                               "{{order_id}}",
+                                                                               "serve"
+                                                                           ]
+                                                              }
+                                                  }
+                                  }
+                              ]
+                 },
+                 {
+                     "name":  "5. Cashier Flow (ط¯ظˆط±ط© ط§ظ„ظƒط§ط´ظٹط±)",
+                     "item":  [
+                                  {
+                                      "name":  "Generate Invoice (ط·ط¨ط§ط¹ط© ط§ظ„ظپط§طھظˆط±ط©)",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "header":  [
+
+                                                                 ],
+                                                      "url":  {
+                                                                  "raw":  "{{base_url}}/invoices/{{order_id}}",
+                                                                  "host":  [
+                                                                               "{{base_url}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "invoices",
+                                                                               "{{order_id}}"
+                                                                           ]
+                                                              }
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Pay Invoice (ط³ط¯ط§ط¯ ط§ظ„ظپط§طھظˆط±ط©)",
+                                      "request":  {
+                                                      "method":  "POST",
+                                                      "header":  [
+
+                                                                 ],
+                                                      "body":  {
+                                                                   "mode":  "raw",
+                                                                   "raw":  "{\n    \"payment_method\": \"cash\",\n    \"amount_paid\": 100.00\n}",
+                                                                   "options":  {
+                                                                                   "raw":  {
+                                                                                               "language":  "json"
+                                                                                           }
+                                                                               }
+                                                               },
+                                                      "url":  {
+                                                                  "raw":  "{{base_url}}/invoices/{{order_id}}/pay",
+                                                                  "host":  [
+                                                                               "{{base_url}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "invoices",
+                                                                               "{{order_id}}",
+                                                                               "pay"
+                                                                           ]
+                                                              }
+                                                  }
+                                  }
+                              ]
+                 }
+             ]
+}
