@@ -1,55 +1,50 @@
-﻿# Smart Menu System - Backend API 🍽️
+# Smart Menu System - API
 
-This is the backend for the Smart Menu System, built with Laravel 11. It manages everything a restaurant needs behind the scenes: tables, orders, kitchen queues, and billing.
+A robust, scalable RESTful API built with Laravel for managing restaurant operations. This backend powers the Smart Menu System, handling everything from table reservations and waiter orders to kitchen queues and cashier billing.
 
-## What it does
+## Core Features
 
-* **Multiple Users (Roles):** Different access levels for Admins, Waiters, Kitchen Staff, and Cashiers using Laravel Sanctum.
-* **Order Tracking:** Follows the order from start to finish (pending -> preparing -> eady -> served -> paid).
-* **Table Management:** Keeps track of table availability, capacity, and prevents double bookings.
-* **Safe Billing:** Uses database transactions and soft deletes so past invoices and financial records are never lost.
-* **Staff Integrations:** Provides specific endpoints for the kitchen display and the cashier's checkout system.
+* Role-Based Access Control (RBAC): Secure API endpoints tailored specifically for Admin, Waiter, Kitchen, and Cashier roles using Laravel Sanctum tokens.
+* Order Lifecycle Management: Tracks orders automatically through precise stages: pending -> preparing -> 
+eady -> served -> paid.
+* Smart Table Management: Prevents double-booking, tracks table capacity, and dynamically updates current status (available, occupied, reserved).
+* Financial Integrity: Uses strict database transactions for order processing and SoftDeletes for menu items and users, ensuring historical invoices and financial reports are never lost or corrupted.
+* Kitchen & Cashier Flows: Dedicated endpoints for kitchen staff to pull active orders and cashiers to generate invoices and process payments natively.
 
-## Built With
+## Tech Stack
 
-* **Framework:** Laravel 11.x
-* **Auth:** Laravel Sanctum
-* **Database:** MySQL / PostgreSQL
+* Framework: Laravel 11.x
+* Authentication: Laravel Sanctum (Token-based SPA Auth)
+* Database: MySQL / PostgreSQL (Relational schema with strict foreign key constraints)
 
-## Getting Started
+## Local Setup
 
-Follow these steps to get the project running locally:
-
-1. **Clone the repo:**
+1. Clone the repository:
    `ash
-   git clone https://github.com/Amad-yaser/Smart-Menu-System---API.git
+   git clone <your-repo-url>
    cd smart-menu-system
    `
-
-2. **Install dependencies:**
+2. Install PHP dependencies:
    `ash
    composer install
    `
-
-3. **Set up the environment file:**
-   Make sure you configure your database settings in the .env file!
+3. Setup environment variables:
    `ash
    cp .env.example .env
    php artisan key:generate
    `
-
-4. **Run migrations and add test data:**
+4. Run migrations and seed the database with test data:
    `ash
    php artisan migrate --seed
    `
-
-5. **Start the server:**
+5. Start the development server:
    `ash
    php artisan serve
    `
 
-## Test Accounts
+## Default Test Accounts (Seeders)
+* Admin: admin@test.com (Password: 123456)
+* Waiter: waiter@test.com (Password: 123456)
 
-If you ran the seeders, you can log in with:
-* **Admin:** dmin@test.com (Password: 123456)
-* **Waiter:** waiter@test.com (Password: 123456)
+---
+*Architected and designed for modern restaurant workflows.*
