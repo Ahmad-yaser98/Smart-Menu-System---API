@@ -36,9 +36,8 @@ class InvoiceController extends Controller
         ]);
 
         $order->update(['status' => 'paid']);
+        $order->table()->update(['status' => 'available']);
         
-        Table::where('id', $order->table_id)->update(['status' => 'available']);
-
         return response()->json([
             'message' => 'تم الدفع بنجاح وإصدار الفاتورة، والطاولة أصبحت متاحة',
             'invoice' => $invoice
