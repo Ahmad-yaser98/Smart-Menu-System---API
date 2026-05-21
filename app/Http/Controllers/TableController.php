@@ -73,8 +73,12 @@ class TableController extends Controller
     public function destroy($id)
     {
         $table = Table::findOrFail($id);
-        $table->delete();
-
-        return response()->json(['message' => 'تم حذف الطاولة بنجاح'], 200);
+        
+        try {
+            $table->delete();
+            return response()->json(['message' => 'تم حذف الطاولة بنجاح'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'عفواً، لا يمكن حذف هذه الطاولة لارتباطها بطلبات أو فواتير سابقة مخصصة لها'], 400);
+        }
     }
 }

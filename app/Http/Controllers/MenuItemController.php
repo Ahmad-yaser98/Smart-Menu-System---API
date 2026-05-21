@@ -46,8 +46,12 @@ class MenuItemController extends Controller
         $menuItem = MenuItem::find($id);
         if (!$menuItem) return response()->json(['message' => 'الوجبة غير موجودة'], 404);
 
-        $menuItem->delete();
-        return response()->json(['message' => 'تم حذف الوجبة بنجاح'], 200);
+        try {
+            $menuItem->delete();
+            return response()->json(['message' => 'تم حذف الوجبة بنجاح'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'لا يمكن حذف هذه الوجبة حيث أنها مرتبطة بطلبات تم إجراؤها من قبل'], 400);
+        }
     }
 
     public function updatePrice(Request $request, $id)

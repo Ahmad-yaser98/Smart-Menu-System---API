@@ -134,4 +134,13 @@ class OrderController extends Controller
             'order' => $order
         ], 200);
     }
+
+    public function adminActiveOrders()
+    {
+        $orders = Order::with(['table', 'items.menuItem'])
+                        ->whereNotIn('status', ['paid', 'cancelled'])
+                        ->orderBy('created_at', 'desc')
+                        ->get();
+        return response()->json($orders);
+    }
 }

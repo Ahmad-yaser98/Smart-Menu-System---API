@@ -40,8 +40,12 @@ class CategoryController extends Controller
     {
         $category = Category::find($id);
         if (!$category) return response()->json(['message' => 'القسم غير موجود'], 404);
-        
-        $category->delete();
-        return response()->json(['message' => 'تم حذف القسم'], 200);
+
+        try {
+            $category->delete();
+            return response()->json(['message' => 'تم حذف القسم'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'لا يمكن حذف هذا القسم لأنه يحتوي على وجبات'], 400);
+        }
     }
 }

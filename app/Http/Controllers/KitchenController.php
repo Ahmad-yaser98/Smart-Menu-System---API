@@ -10,7 +10,7 @@ class KitchenController extends Controller
     public function activeOrders()
     {
         $orders = Order::with(['table', 'items.menuItem'])
-            ->whereIn('status', ['pending', 'preparing'])
+            ->whereIn('status', ['pending', 'preparing', 'ready'])
             ->get();
             
         return response()->json($orders);

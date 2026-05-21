@@ -15,6 +15,10 @@ use App\Http\Controllers\ReportController;
 // ==========================================
 Route::post('/login', [AuthController::class, 'login']);
 
+// Public Menu Routes
+Route::apiResource('categories', CategoryController::class)->only(['index', 'show']);
+Route::apiResource('menu-items', MenuItemController::class)->only(['index', 'show']);
+
 // ==========================================
 // 2. مسارات تتطلب تسجيل دخول عام (Auth)
 // ==========================================
@@ -26,8 +30,6 @@ Route::middleware('auth:sanctum')->group(function () {
     
     // عرض المنيو متاح لكل الموظفين
     Route::get('/menu', [MenuController::class, 'index']);
-    Route::apiResource('categories', CategoryController::class)->only(['index', 'show']);
-    Route::apiResource('menu-items', MenuItemController::class)->only(['index', 'show']);
 
     // ------------------------------------------
     //  صلاحيات المدير (Admin)
@@ -43,8 +45,9 @@ Route::middleware('auth:sanctum')->group(function () {
         // إدارة الطاولات بالكامل
         Route::apiResource('tables', TableController::class);
         
-        // التقارير المالية
+        // التقارير المالية والطلباتش
         Route::get('/reports/financial', [ReportController::class, 'financial']);
+        Route::get('/orders/admin-active', [OrderController::class, 'adminActiveOrders']);
     });
 
     // ------------------------------------------
