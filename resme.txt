@@ -1,0 +1,72 @@
+# Smart Menu System APIs
+
+==========================================
+1. العام (Public API)
+==========================================
+- POST /api/login
+
+==========================================
+2. يتطلب تسجيل دخول (Auth: Sanctum) عام لكل الموظفين
+==========================================
+- POST /api/logout  (تسجيل الخروج)
+- PUT  /api/profile/update  (تحديث الملف الشخصي)
+- GET  /api/menu            (عرض المنيو)
+- GET  /api/categories      (عرض الأقسام)
+- GET  /api/categories/{id} (عرض تفاصيل قسم)
+- GET  /api/menu-items      (عرض عناصر المنيو)
+- GET  /api/menu-items/{id} (عرض تفاصيل عنصر)
+
+==========================================
+3. الإدارة (Admin APIs) - تحتاج صلاحية admin
+==========================================
+[إدارة الموظفين - Users]
+- GET    /api/users
+- POST   /api/users
+- GET    /api/users/{id}
+- PUT    /api/users/{id}
+- DELETE /api/users/{id}
+
+[إدارة الأقسام - Categories]
+- POST   /api/categories
+- PUT    /api/categories/{id}
+- DELETE /api/categories/{id}
+
+[إدارة عناصر المنيو - Menu Items]
+- POST   /api/menu-items
+- PUT    /api/menu-items/{id}
+- DELETE /api/menu-items/{id}
+
+[إدارة الطاولات - Tables]
+- GET    /api/tables
+- POST   /api/tables
+- GET    /api/tables/{id}
+- PUT    /api/tables/{id}
+- DELETE /api/tables/{id}
+
+[التقارير - Reports]
+- GET    /api/reports/financial
+
+==========================================
+4. طاقم التقديم (Waiter APIs) - تحتاج صلاحية waiter
+==========================================
+- GET    /api/tables                   (عرض الطاولات)
+- PUT    /api/tables/{id}/status       (تغيير حالة الطاولة)
+- PUT    /api/tables/{id}/assign       (تعيين الويتر للطاولة)
+- PATCH  /api/orders/{id}/serve        (تقديم الطلب)
+- GET    /api/orders/active            (الطلبات النشطة للويتر)
+- POST   /api/orders                   (إنشاء طلب جديد)
+- POST   /api/orders/{id}/items        (إضافة عناصر للطلب)
+- DELETE /api/orders/{order_id}/items/{item_id} (حذف عنصر من الطلب)
+
+==========================================
+5. المطبخ (Kitchen APIs) - تحتاج صلاحية kitchen
+==========================================
+- GET    /api/kitchen/orders           (الطلبات النشطة)
+- PUT    /api/kitchen/orders/{id}/status (تحديث حالة الطلب المطبخ)
+
+==========================================
+6. الحسابات (Cashier APIs) - تحتاج صلاحية cashier
+==========================================
+- GET    /api/cashier/orders           (الطلبات غير المدفوعة)
+- GET    /api/invoices/{order_id}      (إصدار فاتورة لطلب معين)
+- POST   /api/invoices/{order_id}/pay  (دفع الفاتورة)
