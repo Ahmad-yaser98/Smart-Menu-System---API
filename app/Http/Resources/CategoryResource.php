@@ -17,6 +17,7 @@ class CategoryResource extends JsonResource
        return [
             'id' => $this->id,
             'name' => $this->name,
+            'name_en' => $this->name_en,
             'items' => MenuItemResource::collection($this->whenLoaded('menuItems')), 
         ];
     }
